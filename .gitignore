@@ -1,0 +1,8 @@
+# Folders
+/env
+/venv
+/.vscode
+
+# Files
+.env
+*.DS_Store

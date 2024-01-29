@@ -1,8 +1,8 @@
 name: fetch past weather data
 
 on:
-#   schedule:
-#     - cron: 30 12 * * 4 # At 12:30 every Thursday
+  schedule:
+    - cron: 10 23 * * *
   workflow_dispatch:
 
 jobs:

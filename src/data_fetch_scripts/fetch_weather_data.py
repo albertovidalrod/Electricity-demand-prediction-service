@@ -15,7 +15,7 @@ def main(current_dir: str) -> None:
     directory
 
     Args:
-        current_dir (str): File's current directory
+        * current_dir (str): File's current directory
     """
     data_dir = os.path.join(current_dir, os.path.normpath("../../data/weather_data"))
 

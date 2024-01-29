@@ -1,3 +1,6 @@
 pandas
+pyarrow
+python-dotenv
 numpy
 requests
+typing

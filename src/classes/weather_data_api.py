@@ -153,12 +153,13 @@ class WeatherData:
         )
 
         # Save merged data to CSV and Parquet files
-        all_data_no_dup_df.to_csv(
-            os.path.normpath(
-                f"{self.data_dir}/{location_id}_{location_name}_weather_data.csv"
-            ),
-            index=False,
-        )
-        all_data_no_dup_df.to_parquet(file_dir, index=False)
+        # all_data_no_dup_df.to_csv(
+        #     os.path.normpath(
+        #         f"{self.data_dir}/{location_id}_{location_name}_weather_data.csv"
+        #     ),
+        #     index=False,
+        # )
+        # all_data_no_dup_df.to_parquet(file_dir, index=False)
+        print(all_data_no_dup_df.tail())
 
         return all_data_no_dup_df

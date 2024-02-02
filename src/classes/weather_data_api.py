@@ -84,6 +84,14 @@ class WeatherData:
         # Loop through data and extract required information
         for item in data:
             for sample in item["Rep"]:
+                # Define a list of all keys you want to ensure are present
+                # in the final dictionary
+                all_keys = ["D", "G", "H", "P", "S", "T", "V", "W", "Pt", "Dp", "$"]
+                # Create a new dictionary with keys from sample and corresponding values
+                # from the input dictionary (data).If a key is missing in the sample
+                # dictionary, set its value to None
+                sample = {key: sample.get(key, None) for key in all_keys}
+
                 # Append data to respective lists
                 location_id_list.append(response_json["SiteRep"]["DV"]["Location"]["i"])
                 day.append(item["value"])

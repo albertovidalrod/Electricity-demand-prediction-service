@@ -1,6 +1,6 @@
-pandas
-pyarrow
-python-dotenv
-numpy
-requests
-typing
+pandas == 2.2.0
+pyarrow == 15.0.0
+python-dotenv == 1.0.1
+numpy == 1.26.3
+requests == 2.31.0
+typing == 3.7.4.3

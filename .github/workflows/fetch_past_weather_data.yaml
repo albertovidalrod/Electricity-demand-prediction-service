@@ -27,21 +27,21 @@ jobs:
           ls data/weather_data
   
 
-      # - name: setup python
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.11.4' # install the python version needed
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11.4' # install the python version needed
 
 
           
-      # - name: install python packages
-      #   run: |
-      #     python -m pip install --upgrade pip
-      #     pip install -r requirements.txt
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
           
-      # - name: execute py script
-      #   run: |
-      #     python src/data_fetch_scripts/fetch_weather_data.py
+      - name: execute py script
+        run: |
+          python src/data_fetch_scripts/fetch_weather_data.py
 
       # - name: Commit and Push results
       #   run: |

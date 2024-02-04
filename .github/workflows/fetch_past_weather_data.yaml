@@ -24,7 +24,7 @@ jobs:
 
       - name: Check LFS files are downloaded
         run: |
-          ls data
+          ls data/weather_data
   
 
       # - name: setup python

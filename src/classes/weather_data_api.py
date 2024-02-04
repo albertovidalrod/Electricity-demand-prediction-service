@@ -33,8 +33,9 @@ class WeatherData:
         self.url_basic = "http://datapoint.metoffice.gov.uk/public/data"
 
         # Load environment variables
-        load_dotenv()
+        # load_dotenv()
         self.met_office_api_key = os.getenv("MET_OFFICE_API_KEY")
+        print(self.met_office_api_key)
 
     def gather_location_data(self, location_id: str) -> Tuple[pd.DataFrame, str]:
         """
@@ -55,7 +56,6 @@ class WeatherData:
         )
 
         # Make a GET request to the constructed URL
-        print(url)
         response = requests.get(url=url)
 
         # Parse the response JSON

@@ -38,6 +38,9 @@ jobs:
       - name: Execute py script
         run: |
           python src/data_fetch_scripts/fetch_weather_data.py
+      
+      - name: Set pull.rebase to false
+        run: git config pull.rebase false
 
       - name: Pull changes from remote branch
         run: git pull origin data_updates_weather_data

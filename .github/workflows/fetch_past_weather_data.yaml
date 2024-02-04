@@ -46,10 +46,10 @@ jobs:
         run: |
           python src/data_fetch_scripts/fetch_weather_data.py
 
-      # - name: Commit and Push results
-      #   run: |
-      #     git config user.name github-actions
-      #     git config user.email github-actions@github.com
-      #     git add .
-      #     git commit -m "Data update ${{ steps.get_date.outputs.date}}"
-      #     git push
+      - name: Commit and Push results
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Data update ${{ steps.get_date.outputs.date}}"
+          git push origin HEAD:data_updates_weather_data

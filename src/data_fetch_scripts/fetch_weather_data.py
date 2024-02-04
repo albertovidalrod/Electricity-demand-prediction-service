@@ -1,3 +1,7 @@
+"""
+This module fetches weather data from the MetOffice API
+"""
+
 import os
 import sys
 

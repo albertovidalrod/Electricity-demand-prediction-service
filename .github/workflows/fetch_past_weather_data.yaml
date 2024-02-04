@@ -2,7 +2,7 @@ name: fetch past weather data
 
 on:
   schedule:
-    - cron: 0 2 * * *
+    - cron: 0 16 * * *
   workflow_dispatch:
 
 env:
@@ -46,7 +46,7 @@ jobs:
         run: |
           python src/data_fetch_scripts/fetch_weather_data.py
 
-      - name: Commit and Push results
+      - name: Commit and Push results to data_updates_weather_data branch
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com

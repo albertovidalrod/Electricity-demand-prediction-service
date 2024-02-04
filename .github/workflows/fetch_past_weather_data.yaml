@@ -5,6 +5,9 @@ on:
     - cron: 0 2 * * *
   workflow_dispatch:
 
+env:
+  MET_OFFICE_API_KEY: ${{ secrets.MET_OFFICE_API_KEY }}
+
 jobs:
   build:
     runs-on: ubuntu-latest

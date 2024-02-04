@@ -55,6 +55,7 @@ class WeatherData:
         )
 
         # Make a GET request to the constructed URL
+        print(url)
         response = requests.get(url=url)
 
         # Parse the response JSON

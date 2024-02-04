@@ -40,7 +40,7 @@ jobs:
           python src/data_fetch_scripts/fetch_weather_data.py
 
       - name: Pull changes from remote branch
-        run: git pull origin data_updates_weather_data
+        run: git pull data_updates_weather_data
 
       # - name: Commit and Push results to data_updates_weather_data branch
       #   run: |

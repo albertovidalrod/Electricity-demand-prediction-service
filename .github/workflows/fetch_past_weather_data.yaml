@@ -23,6 +23,9 @@ jobs:
           lfs: True
           fetch-depth: 0
 
+      - name: Switch to data_updates_weather_data branch
+        run: git checkout data_updates_weather_data
+
       - name: Pull LFS objects
         run: git lfs pull
 

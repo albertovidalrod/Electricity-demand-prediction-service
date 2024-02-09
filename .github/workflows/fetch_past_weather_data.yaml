@@ -41,21 +41,11 @@ jobs:
           
       - name: Execute py script
         run: python src/data_fetch_scripts/fetch_weather_data.py
-      
-      - name: Set pull.rebase to false
-        run: git config pull.rebase false
 
-
-      - name: Commit updates
+      - name: Commit and push updates
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Data update ${{ steps.get_date.outputs.date}}"
-
-
-      - name: Pull changes from remote branch
-        run: git pull origin data_updates_weather_data
-
-      - name: Push results to data_updates_weather_data branch
-        run: git push origin HEAD:data_updates_weather_data
+          git commit -m "Data update ${{ steps.get_date.outputs.date}}
+          git push origin HEAD:data_updates_weather_data

@@ -3,7 +3,7 @@ This module contains the WeatherData class, which fetches data using the Met Off
 """
 
 import os
-from typing import Tuple
+from typing import Tuple, Literal
 import requests
 from dotenv import load_dotenv
 
@@ -20,13 +20,14 @@ class WeatherData:
         * gather_and_merge_data
     """
 
-    def __init__(self, data_dir: str, response_format: str) -> None:
+    def __init__(self, response_format: str, data_dir: str = None) -> None:
         """
         Initialise the WeatherData class.
 
         Args:
-            * data_dir (str): Directory where data will be stored.
             * response_format (str): Format of the response from the API.
+            * data_dir (str): Directory where data will be stored.
+                Default to None
         """
         self.data_dir = data_dir
         self.response_format = response_format
@@ -36,26 +37,39 @@ class WeatherData:
         load_dotenv()
         self.met_office_api_key = os.getenv("MET_OFFICE_API_KEY")
 
-    def gather_location_data(self, location_id: str) -> Tuple[pd.DataFrame, str]:
+    def gather_location_data(
+        self, location_id: str, mode: Literal["forecast", "past_data"]
+    ) -> Tuple[pd.DataFrame, str]:
         """
         Gather weather data for a specified location using MET Office's API.
 
         Args:
             * location_id (str): Specified location ID.
+            * mode (str): gather data mode, either past data or forecast
 
         Returns:
             * location_data_df (pd.DataFrame): DataFrame containing weather information.
             * location_name (str): Name of the location.
         """
 
+        if mode not in ["forecast", "past_data"]:
+            raise ValueError("'mode' can only be 'forecast' or 'past_data'")
+
+        if mode == "forecast":
+            wx_type = "fcs"
+            resolution = "3hourly"
+        else:
+            wx_type = "obs"
+            resolution = "hourly"
+
         # Construct the URL using variables and parameters
         url = (
-            f"{self.url_basic}/val/wxobs/all/{self.response_format}/"
-            f"{location_id}?res=hourly&key={self.met_office_api_key}"
+            f"{self.url_basic}/val/wx{wx_type}/all/{self.response_format}/"
+            f"{location_id}?res={resolution}&key={self.met_office_api_key}"
         )
 
         # Make a GET request to the constructed URL
-        response = requests.get(url=url)
+        response = requests.get(url=url, timeout=10)
 
         # Parse the response JSON
         response_json = response.json()
@@ -131,7 +145,9 @@ class WeatherData:
 
         return location_data_df, location_name
 
-    def gather_and_merge_data(self, location_id: str) -> pd.DataFrame:
+    def gather_and_merge_data(
+        self, location_id: str, mode: Literal["forecast", "past_data"]
+    ) -> pd.DataFrame:
         """
         This function gathers weather data for a specified location, merge with
         existing data (if any), and save the merged data to CSV and Parquet files.
@@ -145,7 +161,9 @@ class WeatherData:
         """
 
         # Gather new data and location name
-        new_data_df, location_name = self.gather_location_data(location_id=location_id)
+        new_data_df, location_name = self.gather_location_data(
+            location_id=location_id, mode=mode
+        )
 
         # Read existing data from Parquet file
         file_dir = os.path.normpath(
@@ -161,14 +179,7 @@ class WeatherData:
             drop=True
         )
 
-        # Save merged data to CSV and Parquet files
-        # all_data_no_dup_df.to_csv(
-        #     os.path.normpath(
-        #         f"{self.data_dir}/{location_id}_{location_name}_weather_data.csv"
-        #     ),
-        #     index=False,
-        # )
+        # Save data in parquet file
         all_data_no_dup_df.to_parquet(file_dir, index=False)
-        print(all_data_no_dup_df.tail())
 
         return all_data_no_dup_df

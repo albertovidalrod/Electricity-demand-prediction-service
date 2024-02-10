@@ -23,8 +23,8 @@ jobs:
           lfs: True
           fetch-depth: 0
 
-      - name: Switch to data_updates_weather_data branch
-        run: git checkout data_updates_weather_data
+      - name: Switch to data-updates/weather-data branch
+        run: git checkout data-updates/weather-data
 
       - name: Pull LFS objects
         run: git lfs pull
@@ -48,4 +48,4 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "Data update ${{ steps.get_date.outputs.date}}"
-          git push origin HEAD:data_updates_weather_data
+          git push origin HEAD:data-updates/weather-data

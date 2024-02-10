@@ -36,7 +36,7 @@ def main(current_dir: str) -> None:
     weather_data = WeatherData(data_dir=data_dir, response_format="json")
 
     for location in interest_locations:
-        weather_data.gather_and_merge_data(location_id=location)
+        weather_data.gather_and_merge_data(location_id=location, mode="past_data")
 
 
 if __name__ == "__main__":

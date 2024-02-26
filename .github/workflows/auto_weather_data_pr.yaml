@@ -1,16 +1,19 @@
-name: Create production promotion pull request
+name: Merge weather data updates
 on:
     # schedule:
     #     - cron: 0 18 * * 1
     workflow_dispatch:
 jobs:
-  productionPromotion:
+  mergeWeatherUpdates:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: production
-      - name: Reset promotion branch
+          ref: data-updates/weather_data
+          lfs: True
+          fetch-depth: 0
+          
+      - name: Reset data-updates/weather_data branch
         run: |
           git fetch origin develop:develop
           git reset --hard develop

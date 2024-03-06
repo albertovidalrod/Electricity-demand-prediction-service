@@ -98,28 +98,32 @@ class WeatherData:
 
         # Loop through data and extract required information
         for item in data:
-            for sample in item["Rep"]:
-                # Define a list of all keys you want to ensure are present
-                # in the final dictionary
-                all_keys = ["D", "G", "H", "P", "S", "T", "V", "W", "Pt", "Dp", "$"]
-                # Create a new dictionary with keys from sample and corresponding values
-                # from the input dictionary (data).If a key is missing in the sample
-                # dictionary, set its value to None
-                sample = {key: sample.get(key, None) for key in all_keys}
+            try:
+                for sample in item["Rep"]:
+                    # Define a list of all keys you want to ensure are present
+                    # in the final dictionary
+                    all_keys = ["D", "G", "H", "P", "S", "T", "V", "W", "Pt", "Dp", "$"]
+                    # Create a new dictionary with keys from sample and corresponding values
+                    # from the input dictionary (data).If a key is missing in the sample
+                    # dictionary, set its value to None
+                    sample = {key: sample.get(key, None) for key in all_keys}
 
-                # Append data to respective lists
-                location_id_list.append(response_json["SiteRep"]["DV"]["Location"]["i"])
-                day.append(item["value"])
-                wind_direction.append(sample["D"])
-                wind_gust.append(sample["G"])
-                humidity.append(sample["H"])
-                pressure.append(sample["P"])
-                wind_speed.append(sample["S"])
-                temperature.append(sample["T"])
-                visibility.append(sample["V"])
-                weather.append(sample["W"])
-                dew_point.append(sample["Dp"])
-                minutes_after_midnight.append(sample["$"])
+                    # Append data to respective lists
+                    location_id_list.append(response_json["SiteRep"]["DV"]["Location"]["i"])
+                    day.append(item["value"])
+                    wind_direction.append(sample["D"])
+                    wind_gust.append(sample["G"])
+                    humidity.append(sample["H"])
+                    pressure.append(sample["P"])
+                    wind_speed.append(sample["S"])
+                    temperature.append(sample["T"])
+                    visibility.append(sample["V"])
+                    weather.append(sample["W"])
+                    dew_point.append(sample["Dp"])
+                    minutes_after_midnight.append(sample["$"])
+            except KeyError as e:
+                # Handle the KeyError
+                print(f"KeyError occurred: {e}")
 
         # Check if the extracted location ID matches the specified ID
         if not set(location_id_list) == {location_id}:

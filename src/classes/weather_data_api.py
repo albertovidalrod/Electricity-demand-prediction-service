@@ -95,7 +95,10 @@ class WeatherData:
         temperature = []
         dew_point = []
         minutes_after_midnight = []
-
+        
+        # Convert to list if not already a list
+        if not isinstance(data, list):
+            data = [data]
         # Loop through data and extract required information
         for item in data:
             try:
@@ -124,6 +127,8 @@ class WeatherData:
             except KeyError as e:
                 # Handle the KeyError
                 print(f"KeyError occurred: {e}")
+            except:
+                print("Another error occurred")
 
         # Check if the extracted location ID matches the specified ID
         if not set(location_id_list) == {location_id}:

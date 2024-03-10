@@ -1,25 +1,33 @@
-name: Create production promotion pull request
+name: Merge weather data updates
 on:
     # schedule:
     #     - cron: 0 18 * * 1
     workflow_dispatch:
 jobs:
-  productionPromotion:
+  mergeWeatherUpdates:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: production
-      - name: Reset promotion branch
-        run: |
-          git fetch origin develop:develop
-          git reset --hard develop
+          ref: test/develop
+          lfs: True
+          fetch-depth: 0
+
+      - name: Pull LFS objects
+        run: git lfs pull
+  
+          
+      # - name: Reset data-updates/weather_data branch
+      #   run: |
+      #     git fetch origin develop:develop
+      #     git reset --hard develop
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
+          add-paths: data/weather_data/*.parquet
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Merge PR automatically"
           title: "Merge weather data updates"
-          branch: data-updates/weather_data
-          base: develop
+          branch: test/weather_data
+          base: test/develop

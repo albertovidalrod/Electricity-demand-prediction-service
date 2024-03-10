@@ -29,5 +29,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Merge PR automatically"
           title: "Merge weather data updates"
-          branch: test/weather_data
+          branch: test/weather-data
           base: test/develop

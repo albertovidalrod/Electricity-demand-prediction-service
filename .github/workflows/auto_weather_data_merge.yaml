@@ -32,7 +32,7 @@ jobs:
         with:
           github_token: ${{ github.token }}
           source_ref: data-updates/weather-data
-          target_branch: ${{ github.ref }}
+          target_branch: test/develop
           commit_message_template: '[Automated] Merged weather data updates - ${{ steps.get_date.outputs.date}}'
 
 

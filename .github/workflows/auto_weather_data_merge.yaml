@@ -1,0 +1,24 @@
+name: Merge weather data updates
+on:
+    # schedule:
+    #     - cron: 0 18 * * 1
+    workflow_dispatch:
+jobs:
+  mergeWeatherUpdates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: test/develop
+          lfs: True
+          fetch-depth: 0
+
+      - name: Pull LFS objects
+        run: git lfs pull
+
+      - name: Merge weather data updates
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git merge --no-ff --no-edit -m "Merge weather data updates - ${{ steps.get_date.outputs.date}}" data-updates/weather-data 
+          git push origin test/develop

@@ -7,6 +7,10 @@ jobs:
   mergeWeatherUpdates:
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: get_date
+        run: echo "date=$(date +'%d-%m-%Y')" >> $GITHUB_OUTPUT
+
       - uses: actions/checkout@v4
         with:
           ref: test/develop

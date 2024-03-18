@@ -20,20 +20,15 @@ jobs:
       - name: Pull LFS objects
         run: git lfs pull
 
-      # - name: Merge weather data updates
-      #   run: |
-      #     git config user.name github-actions
-      #     git config user.email github-actions@github.com
-      #     git merge --no-ff --no-edit -m "Merge weather data updates - ${{ steps.get_date.outputs.date}}" data-updates/weather-data 
-      #     git push origin test/develop
-
       - name: Merge weather data updates
-        uses: everlytic/branch-merge@1.1.5
+        uses: devmasx/merge-branch@1.4.0
         with:
-          github_token: ${{ github.token }}
-          source_ref: data-updates/weather-data
+          type: now
+          from_branch: data-updates/weather-data
           target_branch: test/develop
-          commit_message_template: '[Automated] Merged weather data updates - ${{ steps.get_date.outputs.date}}'
+          github_token: ${{ github.token }}
+
+    
 
 
 

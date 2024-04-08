@@ -11,6 +11,7 @@ parent_dir = os.path.normpath(os.path.dirname(CURRENT_DIR))
 sys.path.append(parent_dir)
 
 from classes.weather_data_api import WeatherData
+from classes.utils import Utils
 
 
 def main(current_dir: str) -> None:
@@ -21,7 +22,12 @@ def main(current_dir: str) -> None:
     Args:
         * current_dir (str): File's current directory
     """
-    data_dir = os.path.join(current_dir, os.path.normpath("../../data/weather_data"))
+    config_dir = os.path.join(current_dir, os.path.normpath("../../config"))
+    config = Utils.read_json_files(config_dir=config_dir)
+    data_dir = os.path.join(
+        current_dir,
+        os.path.normpath(f"../../{config['DATA_DIR']}/{config['WEATHER_DATA_DIR']}")
+    )
 
     interest_locations = [
         "3772",  # Heathrow

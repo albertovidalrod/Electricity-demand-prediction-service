@@ -1,5 +1,5 @@
 """
-This module contains the ElectricityData, which fetches data using the National Grid API
+This module contains the ElectricityData class, which fetches data using the National Grid API
 """
 import os
 import datetime

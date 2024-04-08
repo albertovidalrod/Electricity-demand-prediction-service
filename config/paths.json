@@ -1,0 +1,5 @@
+{
+    "DATA_DIR": "data",
+    "WEATHER_DATA_DIR": "weather_data",
+    "ELECTRICITY_DATA_DIR": "electricity_demand_data"
+}

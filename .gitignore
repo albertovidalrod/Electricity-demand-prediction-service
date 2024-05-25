@@ -4,7 +4,7 @@
 /.vscode
 __pycache__/
 media/
-
+notebooks_local/
 
 # Files
 .env

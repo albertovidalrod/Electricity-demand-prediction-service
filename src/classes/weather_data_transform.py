@@ -1,5 +1,5 @@
 """
-This module contains the WeatherDataTransform, which contains the transformations
+This module contains the WeatherDataTransform, which includes the transformations
 performed to the weather data parquet files
 """
 import datetime
@@ -8,7 +8,7 @@ import pandas as pd
 
 class WeatherDataTransform:
     """
-    The methods in this class are used to transformed the weather data before
+    The methods in this class are used to transform the weather data before
     it is passed to the feature store
 
     Methods:
@@ -21,8 +21,13 @@ class WeatherDataTransform:
     @staticmethod
     def transform_individual_locations(file_path: str) -> pd.DataFrame:
         """
-        Transform data from individual weather stations to remove duplicates,
-        NaNs, add the timestamp as the index and map the weather type
+        Transform data from individual weather stations using pandas to:
+        - Remove duplicate values
+        - Remove NaN values
+        - Generate a timestamp in the format day + hour
+        - Changes column data types
+        - Set the timestamp as the index of the dataframe
+        - Map the weather types 
 
         Args:
             * file_path (str): file path
@@ -94,8 +99,9 @@ class WeatherDataTransform:
     @staticmethod
     def generate_all_information_df(df_dict: dict[pd.DataFrame]) -> pd.DataFrame:
         """
-        Generate a dataframe containing information from individual weather
-        stations after scaling it according to the population ratio
+        Generate a dataframe containing the combined information from individual
+        weather stations. The data is combined using the population scaling, i.e.
+        ratio of location population to total population.
 
         Args:
             * df_dict (dict[pd.DataFrame]): dictionary of dataframes containing
@@ -116,7 +122,7 @@ class WeatherDataTransform:
             "thorney_df": 1.5 # Southampton and Portsmouth
         }
         total_population = sum([value for value in area_population.values()])
-        # Calculate population ration for each of the locations
+        # Calculate population ratio for each of the locations
         population_scaling = {
             key:value/total_population for (key, value) in area_population.items()
         }

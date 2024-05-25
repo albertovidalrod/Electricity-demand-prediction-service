@@ -26,7 +26,7 @@ def main(current_dir: str) -> None:
     config = Utils.read_json_files(config_dir=config_dir)
     data_dir = os.path.join(
         current_dir,
-        os.path.normpath(f"../../{config['DATA_DIR']}/{config['ELECTRICITY_DATA_DIR']}")
+        os.path.normpath(f"../../{config['DATA_DIR']}/{config['WEATHER_DATA_DIR']}")
     )
     # Extract filenames from data directory
     sorted_filenames = sorted(

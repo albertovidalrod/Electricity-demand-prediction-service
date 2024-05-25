@@ -8,14 +8,28 @@ import pandas as pd
 
 class WeatherDataTransform:
     """
-
+    The methods in this class are used to transformed the weather data before
+    it is passed to the feature store
 
     Methods:
         * transform_individual_locations
+        * generate_all_information_df
+        * calculate_scaled_temperature
+        * get_max_weather
     """
 
     @staticmethod
     def transform_individual_locations(file_path: str) -> pd.DataFrame:
+        """
+        Transform data from individual weather stations to remove duplicates,
+        NaNs, add the timestamp as the index and map the weather type
+
+        Args:
+            * file_path (str): file path
+
+        Returns:
+            * pd.DataFrame: dataframe containing transformed data
+        """
         df = pd.read_parquet(path=file_path)
         # Remove unnecessary columns
         cols_to_keep = ["day", "minutes_after_midnight", "temperature", "weather"]
@@ -79,6 +93,17 @@ class WeatherDataTransform:
     
     @staticmethod
     def generate_all_information_df(df_dict: dict[pd.DataFrame]) -> pd.DataFrame:
+        """
+        Generate a dataframe containing information from individual weather
+        stations after scaling it according to the population ratio
+
+        Args:
+            * df_dict (dict[pd.DataFrame]): dictionary of dataframes containing
+                information about individual weather stations
+
+        Returns:
+            * pd.DataFrame: dataframe containing scaled data
+        """
         # Create a dict containing the population in millions
         # of the closest big city
         area_population = {
@@ -136,14 +161,18 @@ class WeatherDataTransform:
             df_dict: dict[pd.DataFrame],
             population_scaling: dict[float]
     ) -> pd.Series:
-        """_summary_
+        """
+        Calculate the scaled temperature using temperature data from different
+        locations and their population scaling weights
 
         Args:
-            * df_dict (dict[pd.DataFrame]): _description_
-            * population_scaling (dict[float]): _description_
+            * df_dict (dict[pd.DataFrame]): dictionary of dataframes containing
+                information about individual weather stations
+            * population_scaling (dict[float]): population for different locations
+                measured in millions of citizens
 
         Returns:
-            * pd.Series: _description_
+            * pd.Series: scaled temperature according to population scaling weights
         """
         scaled_temperature_all = 0
         # Iterate over each key-value pair in df_dict
@@ -159,8 +188,25 @@ class WeatherDataTransform:
     def get_max_weather(
             weather_vals: pd.Series, population_scaling: dict[float]
     ) -> list:
+        """
+        Determine the max weather occurrence for a given timestamp. Uses the 
+        their population scaling weights to determine the max weather.
+        
+
+        Args:
+            * weather_vals (pd.Series): weather values for all the locations at
+                a given timestamp
+            * population_scaling (dict[float]): population for different locations
+                measured in millions of citizens
+
+        Returns:
+            * int: weather value with the maximum weight
+        """
         weather_aggregates = []
         unique_weathers = set(weather_vals)
+        # For each weather value, find the locations where it occurs and multiply it
+        # by the corresponding population scaling to determine the overall weight
+        # of each weather value
         for weather in unique_weathers:
             weather_locations = weather_vals[weather_vals == weather].index.to_list()
             aggregate = sum(
@@ -170,8 +216,8 @@ class WeatherDataTransform:
                 ]
             )
             weather_aggregates.append(aggregate)
-            # print(f"Sum of weights for weather {weather} is {aggregate}")
+        # Retrieve the weather value with the highest weight
         index_max = weather_aggregates.index(max(weather_aggregates))
-        # print(f"Weather to keep is: {list(unique_weathers)[index_max]}")
+        max_weather = list(unique_weathers)[index_max]
 
-        return list(unique_weathers)[index_max]
+        return max_weather

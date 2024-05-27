@@ -64,7 +64,10 @@ class ElectricityDataTransform:
         return holiday_dates_observed
 
     @staticmethod
-    def modify_date(df: pd.DataFrame):
+    def modify_date(df_original: pd.DataFrame):
+        # Create a copy of the original dataframe to avoid making
+        # changes to the original dataframe
+        df = df_original.copy()
         # Keep only the "on the hour" samples as these are the only available timestamps
         # in the weather data files
         df = df[df["settlement_period"] % 2 == 1]
@@ -75,14 +78,14 @@ class ElectricityDataTransform:
         # Settlement period equal to 0 corresponds with 00:00:00 and each
         # settlement period adds 30 minutes until settlement period 48, which
         # corresponds with 23:30:00
-        df["period_hour"] = (df["settlement_period"]).apply(
-            lambda x: str(datetime.timedelta(hours=x))
+        hour = (df["settlement_period"]).apply(
+            lambda x: str(datetime.timedelta(hours=x-1))
         )
         # Fix encoding of midnight values
-        df.loc[df["period_hour"] == "1 day, 0:00:00", "period_hour"] = "0:00:00"
+        hour[hour == "1 day, 0:00:00"] = "0:00:00"
         # Create a new column containing the data as day + hour
         df["settlement_date"] = pd.to_datetime(
-            (df["settlement_date"] + " " + df["period_hour"])
+            (df["settlement_date"] + " " + hour)
         )
 
         return df

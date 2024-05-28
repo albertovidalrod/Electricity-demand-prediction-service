@@ -31,7 +31,7 @@ def main(current_dir: str) -> None:
     # Extract filenames from data directory
     sorted_filenames = sorted(
         [file.split(".")[0] for file in os.listdir(os.path.normpath(data_dir))
-         if ".parquet" in file and "transformed" not in file]
+         if ".parquet" in file and "transformed" not in file and "combined" not in file]
     )
     # Transform data from the individual locations and save it to a new parquet file
     for file in sorted_filenames:

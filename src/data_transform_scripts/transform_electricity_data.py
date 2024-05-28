@@ -33,9 +33,7 @@ def main(current_dir: str) -> None:
         os.path.join(data_dir, "historic_demand_year_2024.parquet")
     )
 
-    print(df.sample(n=7, random_state=42))
-
-    df.to_parquet("electricity_data_transformed.parquet")
+    df.to_parquet(os.path.join(data_dir, "electricity_data_transformed.parquet"))
 
 
 

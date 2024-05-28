@@ -10,7 +10,7 @@ import pandas as pd
 
 class ElectricityDataTransform:
     """
-    The methods in this class are used to transform the weather data before
+    The methods in this class are used to transform the electricity demand data before
     it is passed to the feature store
 
     Methods:
@@ -23,12 +23,12 @@ class ElectricityDataTransform:
     def transform_data(file_path: str) -> pd.DataFrame:
         """
         Transform electricity demand data by:
-        - Remove unnecessary columns
+        - Removing unnecessary columns
         - Removing duplicate values
         - Removing NaN values
         - Adding bank holidays to the dataframe
-        - Generate a timestamp in the format day + hour
-        - Set the timestamp as the index of the dataframe
+        - Generating a timestamp in the format day + hour
+        - Setting the timestamp as the index of the dataframe
 
         Args:
             * file_path (str): file path
@@ -118,9 +118,9 @@ class ElectricityDataTransform:
         df["settlement_period"] = (np.ceil(df["settlement_period"] / 2)).astype(int)
 
         # Apply lambda function to turn settlement period into hours.
-        # Settlement period equal to 0 corresponds with 00:00:00 and each
-        # settlement period adds 30 minutes until settlement period 48, which
-        # corresponds with 23:30:00
+        # Settlement period equal to 1 corresponds with 00:00:00 and each
+        # settlement period adds 1 hour until settlement period 24, which
+        # corresponds with 23:00:00
         hour = (df["settlement_period"]).apply(
             lambda x: str(datetime.timedelta(hours=x-1))
         )

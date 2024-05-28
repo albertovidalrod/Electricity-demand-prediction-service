@@ -4,8 +4,6 @@ This module transforms electricity demand data before sending data to the featur
 import os
 import sys
 
-# import pandas as pd
-
 # Add the parent directory to the Python path to import WeatherData class
 CURRENT_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 parent_dir = os.path.normpath(os.path.dirname(CURRENT_DIR))
@@ -16,8 +14,7 @@ from classes.utils import Utils
 
 def main(current_dir: str) -> None:
     """
-    Transform weather data for individual locations and generate a file containing the
-    combined data
+    Transform electricity demand data and generate a file containing the transformed data
 
     Args:
         * current_dir (str): file's current directory

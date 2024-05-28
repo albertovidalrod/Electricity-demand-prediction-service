@@ -1,6 +1,6 @@
 """
-This module contains the WeatherDataTransform, which includes the transformations
-performed to the weather data parquet files
+This module contains the ElectricityDataTransform, which includes the transformations
+performed to the electricity demand data parquet files
 """
 import datetime
 
@@ -9,9 +9,33 @@ import numpy as np
 import pandas as pd
 
 class ElectricityDataTransform:
+    """
+    The methods in this class are used to transform the weather data before
+    it is passed to the feature store
+
+    Methods:
+        * transform_data
+        * get_england_bank_holidays
+        * modify_date
+    """
 
     @staticmethod
     def transform_data(file_path: str) -> pd.DataFrame:
+        """
+        Transform electricity demand data by:
+        - Remove unnecessary columns
+        - Removing duplicate values
+        - Removing NaN values
+        - Adding bank holidays to the dataframe
+        - Generate a timestamp in the format day + hour
+        - Set the timestamp as the index of the dataframe
+
+        Args:
+            * file_path (str): file path
+
+        Returns:
+            * pd.DataFrame: dataframe containing transformed data
+        """
         df = pd.read_parquet(path=file_path)
         # Remove unnecessary columns
         cols_to_keep = ["settlement_date", "settlement_period", "tsd"]
@@ -37,6 +61,15 @@ class ElectricityDataTransform:
 
     @staticmethod
     def get_england_bank_holidays(years: int) -> list[np.datetime64]:
+        """
+        Extract bank holidays in England for the specified years
+
+        Args:
+            * years (int): years for which bank holidays are to be extracted
+
+        Returns:
+            * list[np.datetime64]: list of bank holidays
+        """
         # Extract bank holidays in England
         bank_holiday_england = holidays.UK(
             subdiv="England", years=years, observed=True
@@ -64,7 +97,17 @@ class ElectricityDataTransform:
         return holiday_dates_observed
 
     @staticmethod
-    def modify_date(df_original: pd.DataFrame):
+    def modify_date(df_original: pd.DataFrame) -> pd.DataFrame:
+        """
+        Modify the date in the original dataframe. The new date is in the
+        format day + hour
+
+        Args:
+            df_original (pd.DataFrame): original electricity demand data
+
+        Returns:
+            * pd.DataFrame: electricity demand dataframe with new date format
+        """
         # Create a copy of the original dataframe to avoid making
         # changes to the original dataframe
         df = df_original.copy()

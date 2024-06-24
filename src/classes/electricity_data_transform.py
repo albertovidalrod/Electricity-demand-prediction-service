@@ -38,7 +38,7 @@ class ElectricityDataTransform:
         """
         df = pd.read_parquet(path=file_path)
         # Remove unnecessary columns
-        cols_to_keep = ["settlement_date", "settlement_period", "tsd"]
+        cols_to_keep = ["settlement_date", "settlement_period", "england_wales_demand"]
         df = df[cols_to_keep]
         # Drop rows with nan values
         df = df.dropna()

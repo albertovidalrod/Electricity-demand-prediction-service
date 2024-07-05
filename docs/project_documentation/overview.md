@@ -19,4 +19,12 @@ These ideas are captured by the following diagram:
 The above diagram shows a fully automated MLOps pipeline and that's the ultimate goal, but the pipeline will be built iteratively and the first iterations won't include as many features
 
 ## Previous work and project motivation
-This 
+This project is the continuation of a notebook a created on time series analysis and prediction as part of an ML course. The notebook, [available on Kaggle](https://www.kaggle.com/code/albertovidalrod/uk-electricity-consumption-prediction-time-series), uses past electricity demand data and other features, such as time of the day and day of the year, to analyse the performance of different ML models and make predictions on the hold-out set. 
+
+That project helped me get a really good insight on the dataset, such as the different seasonal patterns, and the different models use, e.g. SARIMA models couldn't capture the complexity of the data and therefore won't be considered as possible ML models for this project. However, there were two questions I didn't answer as part of that project (not that it was meant to be an introductory project on time series analysis):
+
+* What if I added other features such as temperature and weather conditions? Would it improve the accuracy of the predictions?
+* After building an ML model that can make predictions of future electricity demand, can I create a dashboard to visualise the model performance and serve the predictions using an API?
+
+The [National Grid](https://www.nationalgrid.com), the energy company that manages the electricity grid in the UK and whose data I use, has its own prediction service. The goal of this project isn't to create a prediction service that can compete with that of the National Grid, but to build on previous work and challenge myself to build and end-to-end MLOps platform. 
+

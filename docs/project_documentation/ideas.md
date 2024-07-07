@@ -6,6 +6,7 @@ In previous analysis, I've used features such as hour of the day and day of the 
 It looks simple in theory, just add values like the hourly temperature or the overall weather condition, e.g. sunny or cloudy. In practice, it's more complicated since the data from the National Grid is at national level. The temperature, most likely, won't be the same in London and Manchester, and the same can be said about weather condition.
 
 To address this issue, some ideas are suggested:
+
 * Let's predict Wales and England demand instead of National demand or TSD
 * Let's use an weighed-average temperature based on population of the area, e.g. if London has 10% of the population, then london_temp*0.1
 * Try to use an "average" climate condition: e.g. cloudy, sunny... It could be encoded as

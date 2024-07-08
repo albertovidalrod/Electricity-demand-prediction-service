@@ -1,17 +1,13 @@
-# Welcome to MkDocs
+# Introduction
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Welcome to the project documentation for the electricity demand prediction service! This is my first end-to-end MLOps project and I wanted to document the different parts of the project and not just the code.  
 
-## Commands
+The goal of this project is to build an automated MLOps pipeline to:
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+* Fetch data from two APIs, transform it and store in a feature store
+* Re-train a machine learning model (algorithm is yet to be determined) to predict electricity demand given a set of inputs
+* Serve the trained model as a prediction service
+* Monitor the performance of the model and the data and trigger the re-training of the model if required
 
-## Project layout
+I will be using Machine Learning Engineering in Action by Ben Wilson Currently to guide me in the process of building an end-to-end pipeline. Currently, I'm working on the experimentation stage.
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.

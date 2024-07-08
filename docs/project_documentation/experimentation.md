@@ -85,7 +85,32 @@ The results are summarised by the following table:
 | linear_boost_simple - no weather   | 2107.2 | 10.6  | 7109882.0    | 2666.4 | 0.5           | 0.4    |
 | linear_boost_advanced - no weather | 4049.6 | 20.7  | 57325420.0   | 7571.4 | -3.3          | -3.9   |
 
+Note that the difference between simple and advanced models is simply increasing the values of a few hyperparameters. Proper hyperparameter tuning will be performed as part of the MVP.
+
 The above dataframe, which is used as a summary table, shows that:
 
 * Linear trees are the best performing model, both in its simple and advanced versions. An added bonus is that is the second fastest model to train after XGBoost.
 * Using weather data leads to be better results
+
+The comparison of the linear trees model with the test data is as follows:
+![linear_trees](https://raw.githubusercontent.com/albertovidalrod/Electricity-demand-prediction-service/create-documentation-mkdocs/media/images/linear_trees.png)
+
+Before, wrapping up model experimentation. I would like to address some of the questions that Ben Wilson includes at the end of chapter 6 (the rest of the questions aren't that relevant for this project as this project isn't meant to create a proprietary prediction service):
+
+* How often does this need to run? (The question actually refers to training and not inference)
+    * The model will be re-trained daily until a stable model is found. After that, the model will only be re-trained when the performance drops beyond a given threshold
+
+* Where is the data for this right now?
+    * Data is available right now. Electricity demand data is available at any time and the weather data is fetched, updated and stored daily.
+
+* Where are the forecast going to be stored?
+    * The model will be accessed through an API and web app will be available to visualise some dashboards. The tool to store the forecasts hasn't been decided yet, but it needs to fulfill these needs.
+
+* Where is this going to run for training?
+    * Once past the MVP stage, the project will be deployed to a server where the training will be run.
+
+* Where is the inference going to run?
+    * Same as above, in a server
+
+* How are we going to get the predictions to the end users?
+    * Via API

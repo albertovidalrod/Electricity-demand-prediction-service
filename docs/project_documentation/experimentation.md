@@ -26,6 +26,9 @@ The results I got (as of version 16) are as follows:
 The first step of the analysis stage is to visualise the data:
 ![electricity_demand_graph](https://raw.githubusercontent.com/albertovidalrod/Electricity-demand-prediction-service/create-documentation-mkdocs/media/images/electricity_demand_graph.png)
 
+In order to observe the daily pattern, one can zoom in and focus on just one week:
+![electricity_demand_graph_one_week](https://raw.githubusercontent.com/albertovidalrod/Electricity-demand-prediction-service/create-documentation-mkdocs/media/images/electricity_demand_graph_one_week.png)
+
 
 ## Prototyping
 

@@ -1,16 +1,18 @@
 # Introduction
-The Electricity Demand Prediction Service is an innovative solution designed to forecast electricity demand for the upcoming days with precision and reliability. Leveraging historical data from the National Grid API and weather information obtained through the Met Office API, this service utilizes advanced machine learning algorithms to generate accurate predictions tailored to the specific needs of energy providers, grid operators, and stakeholders in the power industry.
+The Electricity Demand Prediction Service is an an-to-end Machine Learning project with the aim to forecast electricity demand for the upcoming days with precision and serve the predictions using an API. The system will leverage historical data from the National Grid API and weather information obtained through the Met Office API to create the ML models.
 
-## Key Features:
+## Key Features
+The desired key features for this project are:
+
 * Data Integration: Fetches historical electricity demand data from the National Grid API and past weather data, as well as weather predictions, from the Met Office API. Integrates seamlessly with these APIs to ensure access to up-to-date and relevant information.
 
-* Machine Learning Modeling: Employs sophisticated machine learning techniques to analyze historical electricity demand patterns in conjunction with weather conditions. Develops predictive models capable of forecasting electricity demand for the next few days with high accuracy and confidence.
+* Machine Learning Modeling: Employs  machine learning techniques to analyze historical electricity demand patterns in conjunction with weather conditions. Develops predictive models capable of forecasting electricity demand for the next few days with high accuracy and confidence.
 
-* MLOps Pipeline: Implements a robust MLOps (Machine Learning Operations) pipeline to automate the process of model training, evaluation, deployment, and monitoring. Ensures seamless integration of machine learning models into operational workflows, enabling continuous improvement and optimization.
+* MLOps Pipeline: Implements a robust MLOps (Machine Learning Operations) pipeline to automate the process of model training, evaluation, deployment, and monitoring
 
-* Scalability and Flexibility: Designed to scale effortlessly, the service can adapt to varying levels of demand and data volume. Whether hosted on a local server or in the cloud, it offers the flexibility to meet the evolving needs of energy markets and grid management.
+* Monitoring and Alerting: Implements comprehensive monitoring and alerting mechanisms to track model performance, detect anomalies, and notify stakeholders of potential issues or deviations. 
 
-* Monitoring and Alerting: Implements comprehensive monitoring and alerting mechanisms to track model performance, detect anomalies, and notify stakeholders of potential issues or deviations. Enables proactive intervention and decision-making to maintain the reliability and efficiency of energy systems.
+Note that some of this 
 
 # Installation and usage
 This project is still in the early stages. Currently, only the capability for fetching data is implemented.
@@ -21,16 +23,7 @@ cd src/data_fetch_scripts
 python fetch_weather_data.py
 ```
 
+# Project documentation
+My goal for this project is to go beyond writing the code to train ML models and creating the infrastructure to serve those models. My aim is to detail the different steps of the project (planning, experimentation, development and production) as well as more technical elements such as the system requirements and architecture.
 
-# Project wiki
-A dedicated wiki has been created for this project. The home page can be found [here](https://github.com/albertovidalrod/Electricity-demand-prediction-service/wiki). The wiki will be used to document the project, including requirements, architecture and more. Currently, the following sections are available:
-* [Architecture and tools](https://github.com/albertovidalrod/Electricity-demand-prediction-service/wiki/Architecture-and-tools)
-* [Ideas](https://github.com/albertovidalrod/Electricity-demand-prediction-service/wiki/Ideas)
-
-# Data sources
-## Met Office API
-The MET Office API is used to fetch historic hourly weather data.
-* [API overview](https://www.metoffice.gov.uk/services/data/datapoint/api-reference#overview)
-* [API documentation - PDF](https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/data/datapoint_api_reference.pdf)
-* [API documentation - hourly observations](https://www.metoffice.gov.uk/services/data/datapoint/uk-hourly-site-specific-observations)
-* [Daily weather reports](https://digital.nmla.metoffice.gov.uk/SO_86058de1-8d55-4bc5-8305-5698d0bd7e13/)
+The documentation can be found [here](https://albertovidalrod.github.io/Electricity-demand-prediction-service/project_documentation/architecture/). 

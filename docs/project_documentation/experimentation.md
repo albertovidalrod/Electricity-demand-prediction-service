@@ -23,7 +23,8 @@ The results I got (as of version 16) are as follows:
 
 
 ## Analysis
-
+The first step of the analysis stage is to visualise the data:
+![electricity_demand_graph](https://raw.githubusercontent.com/albertovidalrod/Electricity-demand-prediction-service/create-documentation-mkdocs/media/images/electricity_demand_graph.png)
 
 
 ## Prototyping

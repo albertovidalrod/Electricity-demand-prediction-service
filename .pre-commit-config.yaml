@@ -1,0 +1,35 @@
+repos:
+  # -----------------------
+  # Basic sanity checks
+  # -----------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+
+  # -----------------------
+  # Ruff: lint + format
+  # -----------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.4
+    hooks:
+      # Lint (and auto-fix where possible)
+      - id: ruff
+        args: [--fix]
+
+      # Code formatting
+      - id: ruff-format
+
+  # -----------------------
+  # Mypy: static typing
+  # -----------------------
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.9.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - types-requests
+          - pandas-stubs

@@ -1,0 +1,52 @@
+[project]
+name = "electricity-demand"
+version = "0.1.0"
+description = "description"
+readme = "README.md"
+requires-python = ">=3.13"
+
+dependencies = [
+    "holidays",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "python-dotenv",
+    "requests",
+    "scikit-learn>=1.8.0",
+    "seaborn",
+    "statsmodels>=0.14.6",
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "ruff",
+    "mypy",
+    "black",
+    "pytest",
+]
+
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]  # handled by formatter
+
+[tool.ruff.isort]
+combine-as-imports = true
+
+
+[tool.mypy]
+python_version = "3.13"
+warn_unused_configs = true
+warn_return_any = true
+warn_unused_ignores = true
+no_implicit_optional = true
+strict_equality = true
+
+# Gradual typing – very important
+disallow_untyped_defs = false
+disallow_incomplete_defs = false

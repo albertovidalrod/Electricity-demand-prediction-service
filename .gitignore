@@ -10,3 +10,4 @@ media/diagrams/
 .env
 *.DS_Store
 *.csv
+.secrets.yaml

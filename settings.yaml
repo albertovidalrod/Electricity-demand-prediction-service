@@ -1,14 +1,17 @@
 electricity_data:
-  - endpoint_url: "https://api.neso.energy/api/3/action/datastore_search"
-  - year_id:
-      2020: "33ba6857-2a55-479f-9308-e5c4c53d4381"
-      2021: "18c69c42-f20d-46f0-84e9-e279045befc6"
-      2022: "bb44a1b5-75b1-4db2-8491-257f23385006"
-      2023: "bf5ab335-9b40-4ea4-b93a-ab4af7bce003"
-      2024: "f6d02c0f-957b-48cb-82ee-09003f2ba759"
-      2025: "b2bde559-3455-4021-b179-dfe60c0337b0"
+  base_url: "https://api.neso.energy/api/3/action/datastore_search"
+  year_id:
+    2020: "33ba6857-2a55-479f-9308-e5c4c53d4381"
+    2021: "18c69c42-f20d-46f0-84e9-e279045befc6"
+    2022: "bb44a1b5-75b1-4db2-8491-257f23385006"
+    2023: "bf5ab335-9b40-4ea4-b93a-ab4af7bce003"
+    2024: "f6d02c0f-957b-48cb-82ee-09003f2ba759"
+    2025: "b2bde559-3455-4021-b179-dfe60c0337b0"
+
+weather_data:
+  base_url: "https://data.hub.api.metoffice.gov.uk/sitespecific/v0"
 
 directories:
-  - data_dire: "data"
-  - weather_data_dir: "weather_data"
-  - electricity_data_dir: "electricity_demand_data"
+  data_dir: "data"
+  weather_data_dir: "weather_data"
+  electricity_data_dir: "electricity_demand_data"

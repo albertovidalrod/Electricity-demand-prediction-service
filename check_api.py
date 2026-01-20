@@ -1,18 +1,7 @@
 import httpx
 
-from dynaconf import Dynaconf
+from config import settings
 
-# with open("settings.yaml", "r") as f:
-#     settings = yaml.safe_load(f)
-
-
-settings = Dynaconf(
-    settings_files=[
-        "settings.yaml",
-        ".secrets.yaml",
-    ],
-    environments=False,  # simpler unless you want dev/prod now
-)
 
 def test_api_endpoint_accessible():
     response = httpx.get(
@@ -30,6 +19,7 @@ def test_api_endpoint_accessible():
 
     data = response.json()
     pass
+
 
 if __name__ == "__main__":
     test_api_endpoint_accessible()

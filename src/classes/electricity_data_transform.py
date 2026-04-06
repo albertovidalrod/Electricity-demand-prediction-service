@@ -2,11 +2,13 @@
 This module contains the ElectricityDataTransform, which includes the transformations
 performed to the electricity demand data parquet files
 """
+
 import datetime
 
 import holidays
 import numpy as np
 import pandas as pd
+
 
 class ElectricityDataTransform:
     """
@@ -44,8 +46,11 @@ class ElectricityDataTransform:
         df = df.dropna()
         # Drop duplicated rows
         df = df.drop_duplicates()
-        # Get the bank holidays and add them to the dataframe
-        holiday_dates = ElectricityDataTransform.get_england_bank_holidays(2024)
+        # Get the bank holidays for the year(s) present in the data
+        years: list[int] = (
+            pd.to_datetime(df["settlement_date"]).dt.year.unique().tolist()
+        )
+        holiday_dates = ElectricityDataTransform.get_england_bank_holidays(years)
         df["is_holiday"] = df["settlement_date"].apply(
             lambda x: pd.to_datetime(x) in holiday_dates
         )
@@ -58,21 +63,20 @@ class ElectricityDataTransform:
 
         return df
 
-
     @staticmethod
-    def get_england_bank_holidays(years: int) -> list[np.datetime64]:
+    def get_england_bank_holidays(years: list[int]) -> list[np.datetime64]:
         """
         Extract bank holidays in England for the specified years
 
         Args:
-            * years (int): years for which bank holidays are to be extracted
+            * years (list[int]): years for which bank holidays are to be extracted
 
         Returns:
             * list[np.datetime64]: list of bank holidays
         """
         # Extract bank holidays in England
-        bank_holiday_england = holidays.UK(
-            subdiv="England", years=years, observed=True
+        bank_holiday_england = holidays.country_holidays(
+            country="UK", subdiv="England", years=years, observed=True
         ).items()
 
         # Create empty lists to store data
@@ -80,7 +84,6 @@ class ElectricityDataTransform:
         holiday_dates = []
         holiday_names_observed = []
         holiday_dates_observed = []
-
 
         for date, name in sorted(bank_holiday_england):
             holiday_dates.append(date)
@@ -122,13 +125,11 @@ class ElectricityDataTransform:
         # settlement period adds 1 hour until settlement period 24, which
         # corresponds with 23:00:00
         hour = (df["settlement_period"]).apply(
-            lambda x: str(datetime.timedelta(hours=x-1))
+            lambda x: str(datetime.timedelta(hours=x - 1))
         )
         # Fix encoding of midnight values
         hour[hour == "1 day, 0:00:00"] = "0:00:00"
         # Create a new column containing the data as day + hour
-        df["settlement_date"] = pd.to_datetime(
-            (df["settlement_date"] + " " + hour)
-        )
+        df["settlement_date"] = pd.to_datetime(df["settlement_date"] + " " + hour)
 
         return df

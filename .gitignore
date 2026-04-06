@@ -1,8 +1,10 @@
 # Folders
 /env
 /venv
+/.venv
 /.vscode
 __pycache__/
+*.egg-info/
 notebooks_local/
 media/diagrams/
 

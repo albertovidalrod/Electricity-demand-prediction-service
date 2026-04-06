@@ -3,11 +3,11 @@ This module contains the WeatherData class, which fetches data using the Met Off
 """
 
 import os
-from typing import Tuple, Literal
-import requests
-from dotenv import load_dotenv
+from typing import Literal
 
 import pandas as pd
+import requests
+from dotenv import load_dotenv
 
 
 class WeatherData:
@@ -20,7 +20,7 @@ class WeatherData:
         * gather_and_merge_data
     """
 
-    def __init__(self, response_format: str, data_dir: str = None) -> None:
+    def __init__(self, response_format: str, data_dir: str | None = None) -> None:
         """
         Initialise the WeatherData class.
 
@@ -39,7 +39,7 @@ class WeatherData:
 
     def gather_location_data(
         self, location_id: str, mode: Literal["forecast", "past_data"]
-    ) -> Tuple[pd.DataFrame, str]:
+    ) -> tuple[pd.DataFrame, str]:
         """
         Gather weather data for a specified location using MET Office's API.
 
@@ -95,7 +95,7 @@ class WeatherData:
         temperature = []
         dew_point = []
         minutes_after_midnight = []
-        
+
         # Convert to list if not already a list
         if not isinstance(data, list):
             data = [data]
@@ -112,7 +112,9 @@ class WeatherData:
                     sample = {key: sample.get(key, None) for key in all_keys}
 
                     # Append data to respective lists
-                    location_id_list.append(response_json["SiteRep"]["DV"]["Location"]["i"])
+                    location_id_list.append(
+                        response_json["SiteRep"]["DV"]["Location"]["i"]
+                    )
                     day.append(item["value"])
                     wind_direction.append(sample["D"])
                     wind_gust.append(sample["G"])
@@ -127,8 +129,8 @@ class WeatherData:
             except KeyError as e:
                 # Handle the KeyError
                 print(f"KeyError occurred: {e}")
-            except:
-                print("Another error occurred")
+            except Exception as e:
+                print(f"Another error occurred: {e}")
 
         # Check if the extracted location ID matches the specified ID
         if not set(location_id_list) == {location_id}:

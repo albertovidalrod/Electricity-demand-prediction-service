@@ -1,36 +1,30 @@
 """
-This module fetches weather data from the NationalGrid API
+This module fetches electricity demand data from the National Grid API
 """
-import os
-import sys
 
-# Add the parent directory to the Python path to import WeatherData class
-CURRENT_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
-parent_dir = os.path.normpath(os.path.dirname(CURRENT_DIR))
-sys.path.append(parent_dir)
+from pathlib import Path
 
 from classes.electricity_data_api import ElectricityData
-from classes.utils import Utils
+from config import settings
 
 
-def main(current_dir: str) -> None:
+def main() -> None:
     """
-    This function fetches data from the National Grid API and stores it in the data
-    directory
-
-    Args:
-        * current_dir (str): File's current directory
+    Fetch electricity demand data from the National Grid API and store it in the
+    data directory.
     """
-    config_dir = os.path.join(current_dir, os.path.normpath("../../config"))
-    config = Utils.read_json_files(config_dir=config_dir)
-    data_dir = os.path.join(
-        current_dir,
-        os.path.normpath(f"../../{config['DATA_DIR']}/{config['ELECTRICITY_DATA_DIR']}")
+    root = Path(__file__).parent.parent.parent
+    data_dir = (
+        root / settings.directories.data_dir / settings.directories.electricity_data_dir
     )
 
-    electricity_data = ElectricityData(data_dir=data_dir)
+    electricity_data = ElectricityData(
+        data_dir=str(data_dir),
+        base_url=settings.electricity_data.base_url,
+        year_id=settings.electricity_data.year_id,
+    )
     electricity_data.gather_historic_data()
 
+
 if __name__ == "__main__":
-    CURRENT_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
-    main(current_dir=CURRENT_DIR)
+    main()

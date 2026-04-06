@@ -2,31 +2,19 @@
 This module fetches weather data from the MetOffice API
 """
 
-import os
-import sys
-
-# Add the parent directory to the Python path to import WeatherData class
-CURRENT_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
-parent_dir = os.path.normpath(os.path.dirname(CURRENT_DIR))
-sys.path.append(parent_dir)
+from pathlib import Path
 
 from classes.weather_data_api import WeatherData
-from classes.utils import Utils
+from config import settings
 
 
-def main(current_dir: str) -> None:
+def main() -> None:
     """
-    This function fetches data from the Met Office API and stores it in the data
-    directory
-
-    Args:
-        * current_dir (str): File's current directory
+    Fetch weather data from the Met Office API and store it in the data directory.
     """
-    config_dir = os.path.join(current_dir, os.path.normpath("../../config"))
-    config = Utils.read_json_files(config_dir=config_dir)
-    data_dir = os.path.join(
-        current_dir,
-        os.path.normpath(f"../../{config['DATA_DIR']}/{config['WEATHER_DATA_DIR']}")
+    root = Path(__file__).parent.parent.parent
+    data_dir = (
+        root / settings.directories.data_dir / settings.directories.weather_data_dir
     )
 
     interest_locations = [
@@ -39,11 +27,11 @@ def main(current_dir: str) -> None:
         "3354",  # Watnall, very close to Nottingham
     ]
 
-    weather_data = WeatherData(data_dir=data_dir, response_format="json")
+    weather_data = WeatherData(data_dir=str(data_dir), response_format="json")
 
     for location in interest_locations:
         weather_data.gather_and_merge_data(location_id=location, mode="past_data")
 
 
 if __name__ == "__main__":
-    main(current_dir=CURRENT_DIR)
+    main()
